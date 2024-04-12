@@ -1,18 +1,13 @@
+# Simple workflow for deploying static content to GitHub Pages
 name: Deploy static content to Pages
 
 on:
+  # Runs on pushes targeting the default branch
   push:
-    branches:
-      - main
+    branches: ["main"]
+
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
 
 jobs:
   deploy:
@@ -21,21 +16,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
-        with:
-          node-version: '14'
-
-      - name: Build and generate static content
-        run: |
-          # Add commands here to build your static content
-          # For example, if you're using npm:
-          # npm install
-          # npm run build
-
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          deploy_key: ${{ secrets.ACCESS_TOKEN }} # Replace with your access token
-          publish_dir: ./web_site # Replace with your static content directory
-          publish_branch: gh-pages
+          deploy_key: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./web_site # Adjust if your static content is in a different directory
